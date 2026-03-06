@@ -4,12 +4,16 @@ from db.models import Movie
 
 def get_movies(genres_ids=None, actors_ids=None) -> QuerySet:
     queryset = Movie.objects.all()
+
     if genres_ids and actors_ids:
         queryset = queryset.filter(genres__id__in=genres_ids, actors__id__in=actors_ids)
+
     elif genres_ids:
         queryset = queryset.filter(genres__id__in=genres_ids)
+
     elif actors_ids:
         queryset = queryset.filter(actors__id__in=actors_ids)
+
     return queryset.distinct()
 
 def get_movie_by_id(movie_id: int) -> Movie:
